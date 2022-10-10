@@ -89,6 +89,8 @@ Process * ProcessManager::create(const Address entry,
         proc->setParent(m_current->getID());
     }
 
+    proc->setPriority(5);
+
     return proc;
 }
 
