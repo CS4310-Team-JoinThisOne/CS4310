@@ -70,6 +70,8 @@ typedef struct ProcessInfo
 
     /** Defines the current state of the Process. */
     Process::State state;
+
+    int priority;
 }
 ProcessInfo;
 
