@@ -220,6 +220,7 @@ extern C int unlink(const char *path);
  */
 extern C unsigned int sleep(unsigned int seconds);
 
+extern C unsigned int wait(unsigned int pid);
 /**
  * @}
  * @}
