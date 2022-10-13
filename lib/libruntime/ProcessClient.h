@@ -66,8 +66,6 @@ class ProcessClient
 
         /** Textual state of the process */
         String textState;
-
-        int priority;
     }
     Info;
 
@@ -87,6 +85,11 @@ class ProcessClient
      */
     ProcessID getParentID() const;
 
+    /**
+     * Get process priority
+     * 
+     * @return int
+     */
     int getPriority();
 
     /**

@@ -83,8 +83,6 @@ class Process
      */
     Process(ProcessID id, Address entry, bool privileged, const MemoryMap &map);
 
-    int setPriority(int prio);
-
     /**
      * Destructor function.
      */
@@ -244,6 +242,12 @@ class Process
      * Set parent process ID.
      */
     void setParent(ProcessID id);
+
+    /**
+     * Set priority
+     */
+    void setPriority(int prio);
+
 
   protected:
 

@@ -51,7 +51,7 @@ ProcessList::Result ProcessList::exec()
             snprintf(line, sizeof(line),
                     "%3d %7d %4d %5d %10s %32s %5d\r\n",
                      pid, info.kernelState.parent,
-                     0, 0, *info.textState, *info.command, info.priority);
+                     0, 0, *info.textState, *info.command, info.kernelState.priority);
             out << line;
         }
     }
