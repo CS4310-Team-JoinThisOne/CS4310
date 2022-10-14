@@ -89,7 +89,15 @@ Process * ProcessManager::create(const Address entry,
         proc->setParent(m_current->getID());
     }
 
+    // Initialize priority, default 5
+    proc->setPriority(5);
+
     return proc;
+}
+
+void ProcessManager::setPriority(Process *proc, int prio)
+{
+    proc->setPriority(prio);
 }
 
 Process * ProcessManager::get(const ProcessID id)

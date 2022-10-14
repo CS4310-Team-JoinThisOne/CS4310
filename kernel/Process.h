@@ -102,6 +102,8 @@ class Process
      */
     ProcessID getParent() const;
 
+    int getPriority();
+
     /**
      * Get Wait ID.
      */
@@ -241,6 +243,12 @@ class Process
      */
     void setParent(ProcessID id);
 
+    /**
+     * Set priority
+     */
+    void setPriority(int prio);
+
+
   protected:
 
     /** Process Identifier */
@@ -260,6 +268,8 @@ class Process
 
     /** Privilege level */
     bool m_privileged;
+
+    int m_priority;
 
     /** Entry point of the program */
     Address m_entry;

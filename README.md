@@ -10,44 +10,42 @@ as you wish under the terms of the GPLv3.
 
 Visit the project website at http://www.FreeNOS.org for more information.
 
-Features
-========
+# Features
 
-* Intel x86 (PC) and ARMv6/ARMv7 architectures (Raspberry Pi 1,2,3, Allwinner H2+/H3)
-* Virtual memory
-* Simple task scheduling
-* Inter Process Communication (IPC)
-* Symmetric Multi Processing with MPI support (via console and ethernet)
-* Devices:
-    * VGA/Keyboard consoles (also supported by Ed's libteken http://80386.nl/projects/libteken/)
-    * i8250 serial UART
-    * PCI host controller
-    * CMOS RTC clock
-    * ATA host controller
-    * Allwinner H2+/H3 ethernet controller
-    * Loopback ethernet controller
-* Filesystems:
-    * Virtual file system (VFS)
-    * Temporary file system (TmpFS)
-    * Linnenbank file system (LinnFS)
-* Networking (IP, UDP, ICMP, ARP)
-* POSIX, ANSI C libraries
-* Dynamic and Shared memory
-* Fully automatic autotester
-* Automated continuous integration using jenkins (http://www.jenkins.io) and Vagrant (http://www.vagrantup.com)
-* All sources documented with Doxygen (http://www.doxygen.org/)
-* User and kernel code written from scratch in C++
-* Very small microkernel (~2K lines of C++ code including a tiny part in assembly)
-* Builds with recent GCC (http://gcc.gnu.org/), LLVM (http://www.llvm.org/) and SCons (http://www.scons.org/) versions on POSIX systems
+- Intel x86 (PC) and ARMv6/ARMv7 architectures (Raspberry Pi 1,2,3, Allwinner H2+/H3)
+- Virtual memory
+- Simple task scheduling
+- Inter Process Communication (IPC)
+- Symmetric Multi Processing with MPI support (via console and ethernet)
+- Devices:
+  - VGA/Keyboard consoles (also supported by Ed's libteken http://80386.nl/projects/libteken/)
+  - i8250 serial UART
+  - PCI host controller
+  - CMOS RTC clock
+  - ATA host controller
+  - Allwinner H2+/H3 ethernet controller
+  - Loopback ethernet controller
+- Filesystems:
+  - Virtual file system (VFS)
+  - Temporary file system (TmpFS)
+  - Linnenbank file system (LinnFS)
+- Networking (IP, UDP, ICMP, ARP)
+- POSIX, ANSI C libraries
+- Dynamic and Shared memory
+- Fully automatic autotester
+- Automated continuous integration using jenkins (http://www.jenkins.io) and Vagrant (http://www.vagrantup.com)
+- All sources documented with Doxygen (http://www.doxygen.org/)
+- User and kernel code written from scratch in C++
+- Very small microkernel (~2K lines of C++ code including a tiny part in assembly)
+- Builds with recent GCC (http://gcc.gnu.org/), LLVM (http://www.llvm.org/) and SCons (http://www.scons.org/) versions on POSIX systems
 
-Host Setup
-==========
+# Host Setup
 
 First install all required build dependencies. FreeNOS needs SCons, an C++ compiler and
 for Intel targets a tool to generate ISO images. Follow the instructions below to install
 the build dependencies on your host OS.
 
-*Ubuntu*
+_Ubuntu_
 
 Update your system repository cache and install the required development tools using:
 
@@ -63,7 +61,7 @@ Alternatively, you can install the LLVM/Clang compiler as well:
 
     $ sudo apt-get install clang
 
-*FreeBSD*
+_FreeBSD_
 
 Update your system repository cache and install the required development tools using:
 
@@ -75,8 +73,7 @@ On FreeBSD, make sure that the latest version of the GNU linker (from pkg) is us
 
     # mv /usr/bin/ld.bfd /usr/bin/ld.bfd.orig
 
-Building FreeNOS
-================
+# Building FreeNOS
 
 To download and extract the released source code on your host OS, run the
 following commands. Replace 'x.x.x' with the version of FreeNOS:
@@ -124,8 +121,7 @@ Or use the following command to also remove temporary SCons files:
 
     $ rm -rf build .sconf_temp .sconsign.dblite
 
-Running FreeNOS
-===============
+# Running FreeNOS
 
 To run the autotester of FreeNOS on the host OS, run:
 
@@ -178,8 +174,7 @@ you can put a condition on a breakpoint that matches the process name:
 The above command puts a condition on the breakpoint with index number 1 that says it should
 only halt execution when the program name string equals "./server/datastore/server".
 
-intel/pc
---------
+## intel/pc
 
 For Intel targets, you can also launch Qemu using the graphical VGA console (using SDL):
 
@@ -200,8 +195,7 @@ Note: make sure to select the correct device to prevent data loss:
 Insert the USB disk device to the target system and make sure to choose it as
 boot device when the computer starts (e.g. via BIOS). You should see the FreeNOS VGA console.
 
-arm/raspberry
--------------
+## arm/raspberry
 
 To build FreeNOS for running on the Raspberry Pi 1, use the provided build.conf file
 and rebuild the system:
@@ -265,8 +259,7 @@ USB serial device (baudrate 115200):
 
 You should now see the FreeNOS console output.
 
-arm/raspberry2
---------------
+## arm/raspberry2
 
 Follow the same instructions as for the Raspberry Pi 1 above, but use the Raspberry Pi 2
 configuration file instead to build FreeNOS:
@@ -285,10 +278,9 @@ file to ensure the first UART is available on GPIO pins 8 and 10:
     dtoverlay=pi3-miniuart-bt
     enable_uart=1
 
-arm/sunxi-h3
-------------
+## arm/sunxi-h3
 
-### U-Boot on SD Card ###
+### U-Boot on SD Card
 
 FreeNOS has support for ARM boards with Allwinner H3 System-on-chips such as the Orange Pi PC
 and Orange Pi Zero (H2+ is a H3 variant). To build FreeNOS for the Allwinner H3, copy the
@@ -350,7 +342,7 @@ To retrieve an IP address using DHCP, use the 'dhcp' command prior to downloadin
     => tftp 0x400fffc0 kernel.ub
     => bootm 0x400fffc0
 
-### U-Boot on SPI Flash ###
+### U-Boot on SPI Flash
 
 Alternatively, the Orange Pi Zero board contains a small SPI flash which can also be used to install U-Boot.
 This can be done using the Allwinner Sunxi Tools via a special FEL mode via USB. First clone and build the sunxi-tools:
@@ -378,7 +370,7 @@ Start the board from the modified Armbian image and run the following commands t
     $ sudo apt-get install mtd-utils
     $ sudo flash_erase /dev/mtd0 0 0200000
 
-### U-Boot on Qemu/TFTP ###
+### U-Boot on Qemu/TFTP
 
 An alternative for testing the boot process using U-Boot is with Qemu. You can start U-Boot via Qemu as the kernel
 to be loaded using -kernel and provide tftp= argument for -netdev to enable the integrated TFTP server in Qemu.
@@ -392,8 +384,7 @@ The following commands can be used to download the FreeNOS image via TFTP and bo
     => tftp 0x400fffc0 build/arm/sunxi-h3/kernel/arm/sunxi-h3/kernel.ub
     => bootm 0x400fffc0
 
-Using FreeNOS
-=============
+# Using FreeNOS
 
 When FreeNOS starts the system will print bootup output and present the system
 login prompt. Currently the login will accept any username value and does not
@@ -484,11 +475,10 @@ You can also start the MPI variant of the prime program via the network with:
 Provide your own configuration file with an arbitrary list of IP addresses to run
 MPI programs on your own compute cluster.
 
-Jenkins Continuous Integration
-==============================
+# Jenkins Continuous Integration
 
-Automated with Vagrant
-----------------------
+## Automated with Vagrant
+
 The installation and configuration of continuous integration for FreeNOS is fully automated
 using Vagrant (https://www.vagrantup.com/). Vagrant is an open source program which automates
 the creation and configuration of virtual machines of various types of backends, for example
@@ -559,8 +549,7 @@ the Jenkins jobs for all available configurations.
 Note for windows users with Vagrant: do not set core.autocrlf to true in git, as otherwise the
 source files will get \r\n characters added, leading to errors in the bash scripts.
 
-Jenkins Master (Manual Install)
--------------------------------
+## Jenkins Master (Manual Install)
 
 The following sections describe how to install Jenkins manually on your host OS for continuous
 integration of FreeNOS. Install Jenkins on your host OS using your favorite package manager or
@@ -635,8 +624,7 @@ are started, for example:
 Also visit the following page for more details on this automatic DNS setup for KVM:
 https://liquidat.wordpress.com/2017/03/03/howto-automated-dns-resolution-for-kvmlibvirt-guests-with-a-local-domain/
 
-FreeBSD 12.0 Slave (Manual Install)
------------------------------------
+## FreeBSD 12.0 Slave (Manual Install)
 
 Run the example installation script in ./support/jenkins/freebsd-12.sh from the FreeNOS sources
 to setup the KVM guest with FreeBSD 12.0. Also see the comments in the installation script for more info:
@@ -683,19 +671,19 @@ Press the 'Save' button to finish and use 'Launch Agent' to test the connection.
 
 You can now press the 'Schedule a Build' button on the 'FreeNOS-freebsd12' build job to test.
 
-Ubuntu 18.04 Slave
-------------------
+## Ubuntu 18.04 Slave
 
 Follow the same instructions as the FreeBSD 12.0 Slave above and just
 replace the slave name with 'ubuntu-1804'.
 
-Authors
-=======
+# Authors
 
 The FreeNOS code has been written from scratch by Niek Linnenbank.
 People who contributed to FreeNOS are:
 
-* Dan Rulos (AmayaOS)
-* Coen Bijlsma (libparse, srv/time)
-* Ed Schouten (libteken)
-* Alexander Schrijver (OpenBSD patches)
+- Dan Rulos (AmayaOS)
+- Coen Bijlsma (libparse, srv/time)
+- Ed Schouten (libteken)
+- Alexander Schrijver (OpenBSD patches)
+
+- Test

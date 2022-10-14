@@ -106,6 +106,11 @@ class ProcessManager
     Result schedule();
 
     /**
+     * Set the priority of a process
+     */
+    void setPriority(Process *proc, int prio);
+
+    /**
      * Let current Process wait for another Process to terminate.
      *
      * @param proc Process pointer

@@ -86,6 +86,13 @@ class ProcessClient
     ProcessID getParentID() const;
 
     /**
+     * Get process priority
+     * 
+     * @return int
+     */
+    int getPriority();
+
+    /**
      * Get process information by its ID.
      *
      * @param pid Process identifier of the process.
@@ -128,6 +135,8 @@ class ProcessClient
 
     /** Our parent process identifier */
     static const ProcessID m_parent;
+
+    static int m_priority;
 };
 
 /**
