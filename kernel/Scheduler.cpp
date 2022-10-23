@@ -21,12 +21,21 @@
 
 Scheduler::Scheduler()
 {
+    priorityQueues[0] = m_queue_1;
+    priorityQueues[1] = m_queue_2;
+    priorityQueues[2] = m_queue_3;
+    priorityQueues[3] = m_queue_4;
+    priorityQueues[4] = m_queue_5;
     DEBUG("");
 }
 
 Size Scheduler::count() const
 {
-    return m_queue.count();
+    return priorityQueues[0].count()
+         + priorityQueues[1].count()
+         + priorityQueues[2].count()
+         + priorityQueues[3].count()
+         + priorityQueues[4].count();
 }
 
 Scheduler::Result Scheduler::enqueue(Process *proc, bool ignoreState)
@@ -37,7 +46,13 @@ Scheduler::Result Scheduler::enqueue(Process *proc, bool ignoreState)
         return InvalidArgument;
     }
 
-    m_queue.push(proc);
+    int prio = proc->getPriority();
+    if(prio < 1 || prio > 5) {
+        ERROR("process priority " << proc->getPriority() << "outside of valid range");
+        return InvalidArgument;
+    }
+
+    priorityQueues[prio-1].push(proc);
     return Success;
 }
 
@@ -49,17 +64,18 @@ Scheduler::Result Scheduler::dequeue(Process *proc, bool ignoreState)
         return InvalidArgument;
     }
 
-    Size count = m_queue.count();
+    int prio = proc->getPriority() - 1;
+    Size count = priorityQueues[prio].count();
 
     // Traverse the Queue to remove the Process
     for (Size i = 0; i < count; i++)
     {
-        Process *p = m_queue.pop();
+        Process *p = priorityQueues[prio].pop();
 
         if (p == proc)
             return Success;
         else
-            m_queue.push(p);
+            priorityQueues[prio].push(p);
     }
 
     FATAL("process ID " << proc->getID() << " is not in the schedule");
@@ -68,27 +84,14 @@ Scheduler::Result Scheduler::dequeue(Process *proc, bool ignoreState)
 
 Process * Scheduler::select()
 {
-    Process *currentProc; // pointer to a process
-    Process *highestProc;
-    int maxPriority = 0;
-
-    for (Size i = 0; i < m_queue.count(); i++)
-    {
-        currentProc = m_queue.pop();
-        if (currentProc->getPriority() > maxPriority) {
-            maxPriority = currentProc->getPriority();
-            highestProc = currentProc;
+    for(int i = 4; i >= 0; i--) {
+        if(priorityQueues[i].count() == 0) {
+            // No processes in this priority level - go to a lower priority level
+            continue;
         }
-        m_queue.push(currentProc);
-    }
-    for (Size i = 0; i < m_queue.count(); i++)
-    {
-        currentProc = m_queue.pop();
-        if (currentProc == highestProc) {
-            m_queue.push(currentProc);
-            return currentProc;
-        }
-        m_queue.push(currentProc);
+        Process *p = priorityQueues[i].pop();
+        priorityQueues[i].push(p);
+        return p;
     }
 
     return (Process *) NULL;

@@ -31,7 +31,7 @@ Process::Process(ProcessID id, Address entry, bool privileged, const MemoryMap &
     m_waitId        = 0;
     m_waitResult    = 0;
     m_wakeups       = 0;
-    m_priority      = 0;
+    m_priority      = 3;
     m_entry         = entry;
     m_privileged    = privileged;
     m_memoryContext = ZERO;
