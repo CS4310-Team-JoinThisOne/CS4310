@@ -40,13 +40,13 @@ Wait::Result Wait::exec()
     int pid = atoi(arguments().get("PID"));
 
     const ProcessClient process;
-    ProcessClient::Info info;
+    ProcessClient::Info info; // info of all processes
 
     // Make sure the process is valid
     const ProcessClient::Result result = process.processInfo(pid, info);
     if (result == ProcessClient::Success)
     {
-        // Valid process
+        // Valid process calls wait
         if(wait(pid)) 
         {
             ERROR("failed to wait: " << strerror(errno));
@@ -56,7 +56,7 @@ Wait::Result Wait::exec()
 
     else
     {
-        // Invalid process - return an error
+        // Invalid process - return an error (no process id)
         ERROR("invalid process id: " << arguments().get("PID") << "'");
         return IOError;
     }
