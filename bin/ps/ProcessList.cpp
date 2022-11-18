@@ -36,7 +36,7 @@ ProcessList::Result ProcessList::exec()
     // Print header
     out << "ID  PARENT  USER GROUP STATUS     CMD\r\n";
 
-    // Loop processes
+    // Loop processes (goes through each process to be printed)
     for (ProcessID pid = 0; pid < ProcessClient::MaximumProcesses; pid++)
     {
         ProcessClient::Info info;
