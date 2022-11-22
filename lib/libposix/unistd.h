@@ -220,6 +220,10 @@ extern C int unlink(const char *path);
  */
 extern C unsigned int sleep(unsigned int seconds);
 
+/** change the priority of a process 
+ * @param pid procss id
+ * @param prio priority to be changed
+ */
 extern C unsigned int renice(unsigned int pid, unsigned int prio);
 /**
  * @}
