@@ -102,6 +102,10 @@ class Process
      */
     ProcessID getParent() const;
 
+  
+    /**
+     * Retrieve process priority number.
+    */
     int getPriority();
 
     /**
@@ -269,6 +273,7 @@ class Process
     /** Privilege level */
     bool m_privileged;
 
+    /** Priority number */
     int m_priority;
 
     /** Entry point of the program */
